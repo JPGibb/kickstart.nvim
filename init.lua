@@ -202,15 +202,13 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'catppuccin/nvim',
     priority = 1000,
     lazy = false,
     config = function()
-      require('onedark').setup {
-        -- Set a style preset. 'dark' is default.
-        style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
+      require('catppuccin').setup {
+        flavour = "mocha"
       }
-      require('onedark').load()
     end,
   },
 
@@ -285,6 +283,8 @@ require('lazy').setup({
   -- { import = 'custom.plugins' },
 }, {})
 
+vim.cmd.colorscheme "catppuccin"
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -293,7 +293,8 @@ require('lazy').setup({
 vim.o.hlsearch = false
 
 -- Make line numbers default
-vim.wo.number = true
+-- vim.wo.number = true
+vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
