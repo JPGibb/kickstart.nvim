@@ -60,6 +60,17 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.opt.colorcolumn = "121"
+local space = "·"
+vim.opt.listchars:append {
+        tab = "->",
+	multispace = space,
+	lead = space,
+	trail = space,
+	nbsp = space
+}
+vim.opt.list = true
+
 -- [[ Configure plugins ]]
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
@@ -226,14 +237,14 @@ require('lazy').setup({
     },
   },
 
-  {
+  --{
     -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
+    --'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help ibl`
-    main = 'ibl',
-    opts = {},
-  },
+    --main = 'ibl',
+    --opts = {},
+  --},
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
@@ -293,7 +304,7 @@ vim.cmd.colorscheme "catppuccin"
 vim.o.hlsearch = false
 
 -- Make line numbers default
--- vim.wo.number = true
+ vim.wo.number = true
 vim.wo.relativenumber = true
 
 -- Enable mouse mode
@@ -651,7 +662,7 @@ cmp.setup {
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
+    ['<C-y>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
@@ -683,3 +694,9 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+vim.filetype.add({
+  pattern = {
+    ['.*.xaml'] = 'xml',
+  }
+})
