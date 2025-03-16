@@ -44,6 +44,7 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.opt.tabstop = 4
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -62,8 +63,9 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.opt.colorcolumn = "121"
 local space = "·"
+
 vim.opt.listchars:append {
-        tab = "->",
+        tab = "→ ",
 	multispace = space,
 	lead = space,
 	trail = space,
@@ -212,15 +214,9 @@ require('lazy').setup({
   },
 
   {
-    -- Theme inspired by Atom
-    'catppuccin/nvim',
+    'marko-cerovac/material.nvim',
     priority = 1000,
     lazy = false,
-    config = function()
-      require('catppuccin').setup {
-        flavour = "mocha"
-      }
-    end,
   },
 
   {
@@ -294,7 +290,7 @@ require('lazy').setup({
   -- { import = 'custom.plugins' },
 }, {})
 
-vim.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme "material-darker"
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -599,11 +595,12 @@ require('mason-lspconfig').setup()
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-  -- gopls = {},
+     gopls = {},
+     zls = {},
   -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+     rust_analyzer = {},
+     tsserver = {},
+     html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
     Lua = {
