@@ -44,9 +44,6 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -62,18 +59,6 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
-
-vim.opt.colorcolumn = "121"
-local space = "·"
-
-vim.opt.listchars:append {
-        tab = "→ ",
-	multispace = space,
-	lead = space,
-	trail = space,
-	nbsp = space
-}
-vim.opt.list = true
 
 -- [[ Configure plugins ]]
 -- NOTE: Here is where you install your plugins.
@@ -139,9 +124,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {
-    notify = false
-  } },
+  { 'folke/which-key.nvim', opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -218,9 +201,17 @@ require('lazy').setup({
   },
 
   {
-    'marko-cerovac/material.nvim',
+    -- Theme inspired by Atom
+    'navarasu/onedark.nvim',
     priority = 1000,
     lazy = false,
+    config = function()
+      require('onedark').setup {
+        -- Set a style preset. 'dark' is default.
+        style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
+      }
+      require('onedark').load()
+    end,
   },
 
   {
@@ -237,14 +228,14 @@ require('lazy').setup({
     },
   },
 
-  --{
+  {
     -- Add indentation guides even on blank lines
-    --'lukas-reineke/indent-blankline.nvim',
+    'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help ibl`
-    --main = 'ibl',
-    --opts = {},
-  --},
+    main = 'ibl',
+    opts = {},
+  },
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
@@ -294,8 +285,6 @@ require('lazy').setup({
   -- { import = 'custom.plugins' },
 }, {})
 
-vim.cmd.colorscheme "material-darker"
-
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -304,8 +293,7 @@ vim.cmd.colorscheme "material-darker"
 vim.o.hlsearch = false
 
 -- Make line numbers default
- vim.wo.number = true
-vim.wo.relativenumber = true
+vim.wo.number = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -599,12 +587,11 @@ require('mason-lspconfig').setup()
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-     gopls = {},
-     zls = {},
+  -- gopls = {},
   -- pyright = {},
-     rust_analyzer = {},
-     tsserver = {},
-     html = { filetypes = { 'html', 'twig', 'hbs'} },
+  -- rust_analyzer = {},
+  -- tsserver = {},
+  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
     Lua = {
@@ -663,7 +650,7 @@ cmp.setup {
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
-    ['<C-y>'] = cmp.mapping.confirm {
+    ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
@@ -695,9 +682,3 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-
-vim.filetype.add({
-  pattern = {
-    ['.*.xaml'] = 'xml',
-  }
-})
